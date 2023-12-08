@@ -40,6 +40,7 @@
   width: 350px;
   background-color: white;
   border-left: 1px solid rgb(239, 243, 244);
+  /* 길어질 수 있기에 스크롤주는거임. 댓글많을떄 */
   overflow: auto;
 }
 
