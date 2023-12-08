@@ -16,17 +16,28 @@
   height: 100dvh;
 }
 
-.leftSection ul {
-  padding-left: 0;
-}
-
 /* fixed는 부모의 width를 잘 못갖고옴, inherit사용*/
 .leftSectionFixed {
   position: fixed;
   width: inherit;
+  padding: 0 8px;
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+@media all and (min-width: 1300px) {
+  .leftSection {
+    width: 275px;
+  }
+  .leftSectionFixed {
+    align-items: flex-start;
+  }
+}
+
+.leftSection ul {
+  padding-left: 0;
 }
 
 .leftSectionFixed nav {
@@ -57,24 +68,47 @@
   background-color: rgba(15, 20, 25, 0.1);
 }
 
+/* post button */
 .postButton {
   margin: 16px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 52px;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 28px;
   background-color: rgb(29, 155, 240);
-  width: 234px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   border: none;
   color: rgb(255, 255, 255);
   font-weight: 700;
   font-size: 17px;
-  border-radius: 26px;
 }
 
 .postButton:hover {
   background-color: rgb(26, 140, 216);
+}
+.postButton span {
+  display: none;
+}
+.postButton svg {
+  display: inline-block;
+  fill: white;
+  width: 24px;
+}
+
+@media all and (min-width: 1300px) {
+  .postButton {
+    height: 52px;
+    width: 234px;
+    border-radius: 26px;
+  }
+  .postButton span {
+    display: inline-block;
+  }
+  .postButton svg {
+    display: none;
+  }
 }
 
 .rightSectionWrapper {
@@ -84,22 +118,31 @@
   flex-direction: column;
   flex-grow: 1;
 }
+.rightSection {
+  display: none;
+}
 
 .rightSectionInner {
-  background-color: white;
   height: 100%;
-  width: 990px;
+  width: 600px;
   display: flex;
   justify-content: space-between;
 }
 
-.main {
-  width: 600px;
+@media all and (min-width: 1024px) {
+  .rightSection {
+    width: 350px;
+    height: 100%;
+    display: inline-block;
+  }
+
+  .rightSectionInner {
+    width: 950px;
+  }
 }
 
-.rightSection {
-  width: 350px;
-  height: 100%;
+.main {
+  width: 600px;
 }
 
 .followRecommend {
