@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import ActionButtons from './ActionButton';
+import PostArticle from './PostArticle';
 // import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons';
 
 dayjs.locale('ko');
@@ -12,6 +13,7 @@ dayjs.extend(relativeTime);
 
 export default function Post() {
   const target = {
+    postId: 1,
     User: {
       id: 'elonmusk',
       nickname: 'Elon Musk',
@@ -22,7 +24,9 @@ export default function Post() {
     Images: [],
   };
   return (
-    <article className={style.post}>
+    // 일부분만 클라이언트로 바꾸는것도 좋음. 서버는 {children}으로, 같이 쓰는 방법 서버/클라이언트 컴포넌트.
+    // 서버컴포넌트는 클라이언트 컴포넌트 자식일 떄, children이나 props로 나온다.
+    <PostArticle post={target}>
       <div className={style.postWrapper}>
         <div className={style.postUserSection}>
           <Link href={`/${target.User.id}`} className={style.postUserImage}>
@@ -47,6 +51,6 @@ export default function Post() {
           <ActionButtons />
         </div>
       </div>
-    </article>
+    </PostArticle>
   );
 }
