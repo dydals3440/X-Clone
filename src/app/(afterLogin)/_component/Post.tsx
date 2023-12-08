@@ -6,12 +6,17 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import ActionButtons from './ActionButton';
 import PostArticle from './PostArticle';
-// import ActionButtons from '@/app/(afterLogin)/_component/ActionButtons';
+// { } named import,
+import { faker } from '@faker-js/faker';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
-export default function Post() {
+type Props = {
+  noImage?: boolean;
+};
+
+export default function Post({ noImage }: Props) {
   const target = {
     postId: 1,
     User: {
@@ -21,8 +26,13 @@ export default function Post() {
     },
     content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
     createdAt: new Date(),
-    Images: [],
+    Images: [] as any[],
   };
+
+  if (Math.random() > 0.5 && !noImage) {
+    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+  }
+
   return (
     // 일부분만 클라이언트로 바꾸는것도 좋음. 서버는 {children}으로, 같이 쓰는 방법 서버/클라이언트 컴포넌트.
     // 서버컴포넌트는 클라이언트 컴포넌트 자식일 떄, children이나 props로 나온다.
@@ -47,7 +57,16 @@ export default function Post() {
             </span>
           </div>
           <div>{target.content}</div>
-          <div className={style.postImageSection}></div>
+          <div className={style.postImageSection}>
+            {target.Images && target.Images.length > 0 && (
+              <Link
+                href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
+                className={style.postImageSection}
+              >
+                <img src={target.Images[0]?.link} alt='' />
+              </Link>
+            )}
+          </div>
           <ActionButtons />
         </div>
       </div>
