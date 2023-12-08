@@ -94,6 +94,8 @@
   border-radius: 16px;
 }
 
+/* action buttons */
+
 .actionButtons {
   display: flex;
   justify-content: space-between;
@@ -131,6 +133,7 @@
   transition-duration: 0.2s;
   margin-right: 4px;
 }
+
 .actionButtons .count {
   font-size: 13px;
   color: rgb(83, 100, 113);
