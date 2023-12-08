@@ -23,7 +23,6 @@
 /* fixed는 부모의 width를 잘 못갖고옴, inherit사용*/
 .leftSectionFixed {
   position: fixed;
-  background-color: orange;
   width: inherit;
   height: 100dvh;
   display: flex;
@@ -99,7 +98,6 @@
 }
 
 .rightSection {
-  background-color: blue;
   width: 350px;
   height: 100%;
 }
