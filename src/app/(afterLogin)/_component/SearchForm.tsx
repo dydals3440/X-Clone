@@ -1,6 +1,9 @@
 import style from '@/app/(afterLogin)/_component/rightSearchZone.module.css';
 
-export default function SearchForm() {
+// 쿼리가 필요없는 곳도 있음.
+type Props = { q?: string };
+
+export default function SearchForm({ q }: Props) {
   return (
     <form className={style.search}>
       <svg width={20} viewBox='0 0 24 24' aria-hidden='true'>
