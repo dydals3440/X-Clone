@@ -34,19 +34,20 @@ export const handlers = [
       },
     });
   }),
+  http.post('/api/users', async ({ request }) => {
+    console.log('회원가입');
+    return HttpResponse.text(JSON.stringify('user_exists'), {
+      status: 403,
+    });
+    // return HttpResponse.text(JSON.stringify('ok'), {
+    //   headers: {
+    //     'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/;Max-Age=0',
+    //   },
+    // });
+  }),
 ];
-//   http.post('/api/users', async ({ request }) => {
-//     console.log('회원가입');
-//     // return HttpResponse.text(JSON.stringify('user_exists'), {
-//     //   status: 403,
-//     // })
-//     return HttpResponse.text(JSON.stringify('ok'), {
-//       headers: {
-//         'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/;Max-Age=0',
-//       },
-//     });
-//   }),
-//   http.get('/api/postRecommends', ({ request }) => {
+
+//http.get('/api/postRecommends', ({ request }) => {
 //     const url = new URL(request.url);
 //     const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
 //     return HttpResponse.json([
