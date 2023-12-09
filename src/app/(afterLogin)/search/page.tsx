@@ -4,6 +4,7 @@ import SearchForm from '@/app/(afterLogin)/_component/SearchForm';
 // import Tab from '@/app/(afterLogin)/search/_component/Tab';
 import Post from '@/app/(afterLogin)/_component/Post';
 import Tab from './_component/Tab';
+import SearchResult from './_component/SearchResult';
 
 type Props = {
   // 탭 누를떄마다, 변경되는 쿼리파람까지도 생각해서 타입 지정하는게 좋다!!
@@ -25,18 +26,7 @@ export default function Search({ searchParams }: Props) {
         <Tab />
       </div>
       <div className={style.list}>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        {/*<SearchResult searchParams={searchParams} />*/}
+        <SearchResult searchParams={searchParams} />
       </div>
     </main>
   );
