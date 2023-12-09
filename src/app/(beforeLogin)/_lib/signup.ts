@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
 
 export default async (prevState: any, formData: FormData) => {
   if (!formData.get('id') || !(formData.get('id') as string)?.trim()) {
@@ -37,6 +38,13 @@ export default async (prevState: any, formData: FormData) => {
     }
     console.log(await response.json());
     shouldRedirect = true;
+    // 회원가입 성공한 후, 로그인까지 같이 해버리는 것.
+    await signIn('credentials', {
+      username: formData.get('id'),
+      password: formData.get('password'),
+      // redirect: true시 서버쪽에서 하기 때문에 router.replace활용 (클라이언트 컴포넌트이기 떄문)
+      redirect: false,
+    });
   } catch (err) {
     console.error(err);
     return;
