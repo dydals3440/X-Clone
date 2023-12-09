@@ -2,7 +2,7 @@
 
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import style from '@/app/(beforeLogin)/_component/login.module.css';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 // 클라이언트
 import { signIn } from 'next-auth/react';
 
