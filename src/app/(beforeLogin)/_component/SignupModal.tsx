@@ -1,49 +1,34 @@
+'use client';
+
 import style from './signup.module.css';
-import { redirect } from 'next/navigation';
+import onSubmit from '../_lib/signup';
 import BackButton from './BackButton';
+import { useFormState, useFormStatus } from 'react-dom';
+
+function showMessage(message: string) {
+  if (message === 'no_id') {
+    return '아이디가 없습니다.';
+  }
+  if (message === 'no_nick') {
+    return '닉네임을 입력하세요.';
+  }
+  if (message === 'no_password') {
+    return '비밀번호를 입력하세요.';
+  }
+  if (message === 'no_image') {
+    return '이미지를 업로드하세요.';
+  }
+  if (message === 'user_exists') {
+    return '이미 사용중인 아이디입니다.';
+  }
+
+  return '';
+}
 
 export default function SignupModal() {
-  const submit = async (formData: FormData) => {
-    'use server';
+  const [state, formAction] = useFormState(onSubmit, { message: null as any });
+  const { pending } = useFormStatus();
 
-    if (!formData.get('id')) {
-      return { message: 'no_id' };
-    }
-    if (!formData.get('name')) {
-      return { message: 'no_name' };
-    }
-    if (!formData.get('password')) {
-      return { message: 'no_password' };
-    }
-    if (!formData.get('image')) {
-      return { message: 'no_image' };
-    }
-    let shouldRedirect = false;
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
-        {
-          method: 'post',
-          body: formData,
-          // 이게 있어야 쿠키가 전달됨
-          // 이미 로그인한 사람이 또 로그인한 경우에는 쿠키가 있어야지만 로그인했냐 안했냐 알 수도있음.
-          credentials: 'include',
-        }
-      );
-      console.log(response.status);
-      if (response.status === 403) {
-        return { message: 'user_exists' };
-      }
-      console.log(await response.json());
-      shouldRedirect = true;
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-    if (shouldRedirect) {
-      redirect('/home'); // redirect는 try catch 내부에서 X
-    }
-  };
   return (
     <>
       <div className={style.modalBackground}>
@@ -52,7 +37,7 @@ export default function SignupModal() {
             <BackButton />
             <div>계정을 생성하세요.</div>
           </div>
-          <form action={submit}>
+          <form action={formAction}>
             <div className={style.modalBody}>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor='id'>
@@ -64,7 +49,6 @@ export default function SignupModal() {
                   className={style.input}
                   type='text'
                   placeholder=''
-                  required
                 />
               </div>
               <div className={style.inputDiv}>
@@ -100,17 +84,22 @@ export default function SignupModal() {
                 <input
                   id='image'
                   name='image'
+                  required
                   className={style.input}
                   type='file'
                   accept='image/*'
-                  required
                 />
               </div>
             </div>
             <div className={style.modalFooter}>
-              <button type='submit' className={style.actionButton}>
+              <button
+                type='submit'
+                className={style.actionButton}
+                disabled={pending}
+              >
                 가입하기
               </button>
+              <div className={style.error}>{state?.message}</div>
             </div>
           </form>
         </div>
