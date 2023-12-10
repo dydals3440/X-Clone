@@ -228,6 +228,7 @@ export const handlers = [
     ]);
   }),
   http.get('/api/users/:userId', ({ request, params }): StrictResponse<any> => {
+    // 유저아이디가 있는 경우, 없는 경우 UI가 다르기 때문에, handler처리
     const { userId } = params;
     const found = User.find((v) => v.id === userId);
     if (found) {

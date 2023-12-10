@@ -8,7 +8,7 @@ export default function LogoutButton() {
   const router = useRouter();
   // 클라이언트에서만 useSession 사용가능
   const { data: me } = useSession();
-  console.log(me);
+
   // const me = {
   //   id: 'dydals3440',
   //   nickname: '매튜',
