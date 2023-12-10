@@ -10,6 +10,7 @@ import FollowRecommend from './_component/FollowRecommend';
 import RightSearchZone from './_component/RightSearchZone';
 import { auth } from '@/auth';
 import RQProvider from './_component/RQProvider';
+import FollowRecommendSection from './_component/FollowRecommendSection';
 
 type Props = { children: ReactNode; modal: ReactNode };
 
@@ -58,9 +59,9 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
               <TrendSection />
               <div className={style.followRecommend}>
                 <h3>팔로우 추천</h3>
-                <FollowRecommend />
-                <FollowRecommend />
-                <FollowRecommend />
+                {/* 서버 컴포넌트에서는 useQuery X -> 별도 클라이언트 컴포넌트로 분리 (페이지랑 레이아웃 자제를 클라이언트 컴포넌트로 변화하는것을 선호하지 않음.) */}
+                {/* <FollowRecommend /> */}
+                <FollowRecommendSection />
               </div>
             </section>
           </div>
