@@ -14,27 +14,17 @@ const User = [
   { id: 'zerohch0', nickname: '제로초', image: '/5Udwvqim.jpg' },
   { id: 'leoturtle', nickname: '레오', image: faker.image.avatar() },
 ];
-
 const Posts = [];
 
 export const handlers = [
   http.post('/api/login', () => {
     console.log('로그인');
-    return HttpResponse.json(
-      {
-        userId: 1,
-        nickname: '제로초',
-        id: 'zerocho',
-        image: '/5Udwvqim.jpg',
+    return HttpResponse.json(User[1], {
+      headers: {
+        'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/',
       },
-      {
-        headers: {
-          'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/',
-        },
-      }
-    );
+    });
   }),
-
   http.post('/api/logout', () => {
     console.log('로그아웃');
     return new HttpResponse(null, {
@@ -43,12 +33,11 @@ export const handlers = [
       },
     });
   }),
-
   http.post('/api/users', async ({ request }) => {
     console.log('회원가입');
     // return HttpResponse.text(JSON.stringify('user_exists'), {
     //   status: 403,
-    // });
+    // })
     return HttpResponse.text(JSON.stringify('ok'), {
       headers: {
         'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/;Max-Age=0',
@@ -228,7 +217,6 @@ export const handlers = [
     ]);
   }),
   http.get('/api/users/:userId', ({ request, params }): StrictResponse<any> => {
-    // 유저아이디가 있는 경우, 없는 경우 UI가 다르기 때문에, handler처리
     const { userId } = params;
     const found = User.find((v) => v.id === userId);
     if (found) {
