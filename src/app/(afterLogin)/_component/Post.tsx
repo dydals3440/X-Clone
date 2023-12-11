@@ -22,14 +22,14 @@ type Props = {
 export default function Post({ noImage, post }: Props) {
   const target = post;
 
-  if (Math.random() > 0.5 && !noImage) {
-    target.Images.push(
-      { imageId: 1, link: faker.image.urlLoremFlickr() },
-      { imageId: 2, link: faker.image.urlLoremFlickr() },
-      { imageId: 3, link: faker.image.urlLoremFlickr() },
-      { imageId: 4, link: faker.image.urlLoremFlickr() }
-    );
-  }
+  // if (Math.random() > 0.5 && !noImage) {
+  //   target.Images.push(
+  //     { imageId: 1, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 2, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 3, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 4, link: faker.image.urlLoremFlickr() }
+  //   );
+  // }
 
   return (
     // 일부분만 클라이언트로 바꾸는것도 좋음. 서버는 {children}으로, 같이 쓰는 방법 서버/클라이언트 컴포넌트.
@@ -55,9 +55,11 @@ export default function Post({ noImage, post }: Props) {
             </span>
           </div>
           <div>{target.content}</div>
-          <div>
-            <PostImages post={target} />
-          </div>
+          {!noImage && (
+            <div>
+              <PostImages post={target} />
+            </div>
+          )}
           <ActionButtons />
         </div>
       </div>
