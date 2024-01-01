@@ -11,12 +11,20 @@ export default function Tab() {
   const onClickHot = () => {
     setCurrent('hot');
     // prop으로 받아도되고, 클라이언트에서는, useSearchParams로 받아올 수 있음 편하게!!
-    router.replace(`/search?q=${searchParams.get('q')}`);
+    let url = `/search?q=${searchParams.get('q')}`;
+    // has가 좋은이유 -> true/false bool값으로 나옴
+    if (searchParams.has('pf')) {
+      url += `&pf=${searchParams.get('pf')}`;
+    }
+    router.replace(url);
   };
   const onClickNew = () => {
     setCurrent('new');
     // searchParams.toString() 현재 search Param 기존에 있는거 다쓰고, 하나 더 추가
-    router.replace(`/search?${searchParams.toString()}&f=live`);
+    let url = `/search?q=${searchParams.get('q')}&f=live`;
+    if (searchParams.has('pf')) {
+      url += `$pf=${searchParams.get('pf')}`;
+    }
   };
 
   return (

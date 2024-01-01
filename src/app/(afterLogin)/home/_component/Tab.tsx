@@ -5,6 +5,7 @@ import { TabContext } from '@/app/(afterLogin)/home/_component/TabProvider';
 
 export default function Tab() {
   const { tab, setTab } = useContext(TabContext);
+
   const onClickRec = () => {
     setTab('rec');
   };

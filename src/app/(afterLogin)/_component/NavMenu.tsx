@@ -1,8 +1,12 @@
 'use client';
 
 import style from './navMenu.module.css';
-import { useSelectedLayoutSegment } from 'next/navigation';
+import {
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from 'next/navigation';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function NavMenu() {
   // Home에 있으면 Home이 된다.
@@ -10,9 +14,9 @@ export default function NavMenu() {
   // compose/tweet를 받고 싶으면 useSelectedLayoutSegments() s붙여 사용!
   const segment = useSelectedLayoutSegment();
 
-  const me = {
-    id: 'dydals3440s',
-  };
+  const { data: me } = useSession();
+
+  console.log(segment);
 
   return (
     <>
@@ -121,11 +125,11 @@ export default function NavMenu() {
           </div>
         </Link>
       </li>
-      {me?.id && (
+      {me?.user?.email && (
         <li>
-          <Link href={`/${me?.id}`}>
+          <Link href={`/${me?.user?.email}`}>
             <div className={style.navPill}>
-              {segment === me.id ? (
+              {segment === me.user?.email ? (
                 <>
                   <svg
                     width={26}

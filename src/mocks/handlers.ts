@@ -46,6 +46,7 @@ export const handlers = [
   }),
   http.get('/api/postRecommends', ({ request }) => {
     const url = new URL(request.url);
+    // 커서가 없다하면 기본 값은 0
     const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
     return HttpResponse.json([
       {

@@ -16,9 +16,12 @@ export default async function Home() {
   const queryClient = new QueryClient();
   // 요런 키를 갖고있는 애일떄는, queryFn을 실행해서 값을 가져와라
   // 값을 갖고올떄는 queryClient.getQueryData(['posts', 'recommends']), 수정시는 setQueryData
-  await queryClient.prefetchQuery({
+  // prefetchQuery -> prefetchInfiniteQuery로 변경해서 무한 스크롤
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ['posts', 'recommends'],
     queryFn: getPostRecommends,
+    // 커서 값
+    initialPageParam: 0,
   });
   // dehydratedState을 리액트쿼리가 hydrate(서버에서 온 데이터를 형식맞춰서 클라이언트가 받음.)
   const dehydratedState = dehydrate(queryClient);

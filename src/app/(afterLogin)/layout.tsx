@@ -17,6 +17,7 @@ type Props = { children: ReactNode; modal: ReactNode };
 export default async function AfterLoginLayout({ children, modal }: Props) {
   // 서버컴포넌트이기 때문에
   const session = await auth();
+
   return (
     <div className={style.container}>
       <header className={style.leftSectionWrapper}>
