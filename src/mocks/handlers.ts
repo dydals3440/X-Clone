@@ -16,6 +16,11 @@ const User = [
 ];
 const Posts = [];
 
+const delay = (ms: any) =>
+  new Promise((res, rej) => {
+    setTimeout(res, ms);
+  });
+
 export const handlers = [
   http.post('/api/login', () => {
     console.log('로그인');
@@ -44,9 +49,11 @@ export const handlers = [
       },
     });
   }),
-  http.get('/api/postRecommends', ({ request }) => {
+  http.get('/api/postRecommends', async ({ request }) => {
+    await delay(3000);
     const url = new URL(request.url);
     // 커서가 없다하면 기본 값은 0
+    // 문자열로 되어있으니 parseInt로 변환
     const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
     return HttpResponse.json([
       {
@@ -98,7 +105,8 @@ export const handlers = [
       },
     ]);
   }),
-  http.get('/api/followingPosts', ({ request }) => {
+  http.get('/api/followingPosts', async ({ request }) => {
+    await delay(3000);
     return HttpResponse.json([
       {
         postId: 1,

@@ -17,6 +17,7 @@ export default async function Home() {
   // 요런 키를 갖고있는 애일떄는, queryFn을 실행해서 값을 가져와라
   // 값을 갖고올떄는 queryClient.getQueryData(['posts', 'recommends']), 수정시는 setQueryData
   // prefetchQuery -> prefetchInfiniteQuery로 변경해서 무한 스크롤
+  // 로딩이 안보이는이유(로딩처리해줬는데도) 서버에서, 불러와서 dehydrate했기 때문에 로딩 보여줄새가없음.
   await queryClient.prefetchInfiniteQuery({
     queryKey: ['posts', 'recommends'],
     queryFn: getPostRecommends,
