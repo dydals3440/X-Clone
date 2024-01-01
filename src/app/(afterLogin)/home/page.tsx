@@ -1,9 +1,4 @@
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query';
-import Post from '../_component/Post';
+import { Suspense } from 'react';
 import PostForm from './_component/PostForm';
 import Tab from './_component/Tab';
 import TabProvider from './_component/TabProvider';
@@ -11,31 +6,24 @@ import style from './home.module.css';
 import { getPostRecommends } from './_lib/getPostRecommends';
 import PostRecommends from './_component/PostRecommends';
 import TabDecider from './_component/TabDecider';
+import TabDeciderSuspense from './_component/TabDeciderSuspense';
+import Loading from './loading';
 
 export default async function Home() {
-  const queryClient = new QueryClient();
-  // 요런 키를 갖고있는 애일떄는, queryFn을 실행해서 값을 가져와라
-  // 값을 갖고올떄는 queryClient.getQueryData(['posts', 'recommends']), 수정시는 setQueryData
-  // prefetchQuery -> prefetchInfiniteQuery로 변경해서 무한 스크롤
-  // 로딩이 안보이는이유(로딩처리해줬는데도) 서버에서, 불러와서 dehydrate했기 때문에 로딩 보여줄새가없음.
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ['posts', 'recommends'],
-    queryFn: getPostRecommends,
-    // 커서 값
-    initialPageParam: 0,
-  });
-  // dehydratedState을 리액트쿼리가 hydrate(서버에서 온 데이터를 형식맞춰서 클라이언트가 받음.)
-  const dehydratedState = dehydrate(queryClient);
+  // throw '에러'로 에러 확인가능!
+  // throw '으하하하';
   return (
     <main className={style.main}>
-      <HydrationBoundary state={dehydratedState}>
-        <TabProvider>
-          <Tab />
-          <PostForm />
-          <TabDecider />
-          {/* <PostRecommends /> */}
-        </TabProvider>
-      </HydrationBoundary>
+      <TabProvider>
+        <Tab />
+        <PostForm />
+        {/* 이부분만 나중에 로딩되길 원하니 Suspense가 이쪽에 있어야지 밑에 로딩되고 있는 애들을 감지할 수 있음. 그래서 query logic들을 Tabdecider suspense로 옮겨줌.로딩이 필요없는애들은 바깥으로 빼자.*/}
+        {/* 1. page.tsx -> loading 2. 서버 Suspense -> fallback, 3. react-query -> isPending */}
+        <Suspense fallback={<Loading />}>
+          <TabDeciderSuspense />
+        </Suspense>
+        {/* <PostRecommends /> */}
+      </TabProvider>
     </main>
   );
 }
